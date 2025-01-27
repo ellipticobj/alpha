@@ -16,17 +16,17 @@ def parseline(line, stack: Stack):
         if not args:
             raise ValueError("you need to push something")
         
-        val = args[0]
+        val = args[0].lower()
         
-        try:
-            stack.push(int(val))
-        except ValueError:
+        if val in {'true', 'false'}:
+            stack.push(val == 'true')
+        else:
             try:
-                stack.push(float(val))
-            except ValueError:
+                stack.push(int(val))
+            except:
                 try:
-                    stack.push(bool(val))
-                except ValueError:
+                    stack.push(float(val))
+                except:
                     stack.push(val)
 
         return ''
@@ -46,8 +46,10 @@ def parseline(line, stack: Stack):
         if len(stack.stack()) < 2:
             raise ValueError('stack needs 2 elements')
         
-        lhs = int(stack.pop())
-        rhs = int(stack.pop())
+        # TODO: limit these to only ints and floats
+        
+        lhs = stack.pop()
+        rhs = stack.pop()
 
         stack.push(lhs + rhs)
 
@@ -58,7 +60,7 @@ def parseline(line, stack: Stack):
             raise ValueError('stack cannot be empty')
         
         if len(stack.stack()) < 2:
-            raise ValueError('stack needss 2 elements')
+            raise ValueError('stack needs 2 elements')
         
         lhs = int(stack.pop())
         rhs = int(stack.pop())
@@ -100,6 +102,30 @@ def parseline(line, stack: Stack):
     
     elif op == "DUMP":
         return stack.dump()
+    
+    elif op == 'EQ':
+        if len(stack.stack()) < 2:
+            raise ValueError("stack needs 2 elements")
+        a = stack.pop()
+        b = stack.pop()
+        stack.push(a == b)
+        return ''
+
+    elif op == 'LT':
+        if len(stack.stack()) < 2:
+            raise ValueError("stack needs 2 elements")
+        a = stack.pop()
+        b = stack.pop()
+        stack.push(a < b)
+        return ''
+
+    elif op == 'GT':
+        if len(stack.stack()) < 2:
+            raise ValueError("stack needs 2 elements")
+        a = stack.pop()
+        b = stack.pop()
+        stack.push(a > b)
+        return ''
     
     else:
         return ''

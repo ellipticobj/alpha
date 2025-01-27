@@ -18,18 +18,18 @@ class Stack:
 
         return data
 
-    def pop(self):
+    def pop(self, idx=-1):
         try:
             with open(self.filepath, 'r') as file:
                 lines = file.readlines()
         
         except FileNotFoundError:
-            raise FileNotFoundError("stack file not found")
+            raise FileNotFoundError("stack underflow")
 
         if not lines:
             raise IndexError('stack is empty')
         
-        last = lines.pop().strip()
+        last = lines.pop(idx).strip()
 
         with open(self.filepath, 'w') as file:
             file.write(''.join(lines))
@@ -37,8 +37,12 @@ class Stack:
         return last
     
     def print(self):
-        with open(self.filepath, 'r') as file:
-            lines = file.readlines()
+        try:
+            with open(self.filepath, 'r') as file:
+                lines = file.readlines()
+        
+        except FileNotFoundError:
+            raise FileNotFoundError("stack underflow")
 
         if not lines:
             return ''
@@ -46,8 +50,12 @@ class Stack:
         return lines[-1].strip()
     
     def dump(self):
-        with open(self.filepath, 'r') as file:
-            lines = file.readlines()
+        try:
+            with open(self.filepath, 'r') as file:
+                lines = file.readlines()
+        
+        except FileNotFoundError:
+            raise FileNotFoundError("stack underflow")
 
         with open(self.filepath, 'w') as file:
             pass
@@ -55,20 +63,32 @@ class Stack:
         return [line.strip() for line in lines]
     
     def stack(self):
-        with open(self.filepath, 'r') as file:
-            return [i.strip() for i in file.readlines()]
+        try:
+            with open(self.filepath, 'r') as file:
+                return [i.strip() for i in file.readlines()]
+        
+        except FileNotFoundError:
+            raise FileNotFoundError("stack underflow")
         
     def dup(self):
-        with open(self.filepath, 'r') as file:
-            last = ''.join(file.readlines()[-1]).strip()
+        try:
+            with open(self.filepath, 'r') as file:
+                last = ''.join(file.readlines()[-1]).strip()
+        
+        except FileNotFoundError:
+            raise FileNotFoundError("stack underflow")
 
         self.push(last)
 
         return ''
 
     def swap(self):
-        with open(self.filepath, 'r') as file:
-            lines = file.readlines()
+        try:
+            with open(self.filepath, 'r') as file:
+                lines = file.readlines()
+        
+        except FileNotFoundError:
+            raise FileNotFoundError("stack underflow")
         
         first = lines.pop()
         second = lines.pop()
@@ -79,7 +99,35 @@ class Stack:
         return ''
     
     def depth(self):
-        with open(self.filepath, 'r') as file:
-            lines = file.readlines()
+        try:
+            with open(self.filepath, 'r') as file:
+                lines = file.readlines()
+        
+        except FileNotFoundError:
+            raise FileNotFoundError("stack underflow")
         
         return len(lines)
+    
+    def drop(self):
+        with open(self.filepath, 'w'):
+            pass
+
+        return ''
+    
+    def rot(self):
+        try:
+            with open(self.filepath, 'r') as file:
+                lines = file.readlines()
+        
+        except FileNotFoundError:
+            raise FileNotFoundError("stack underflow")
+        
+        first = self.pop(-2)
+        second = self.pop(-1)
+        third = self.pop(0)
+        
+        self.push(second)
+        self.push(third)
+        self.push(first)
+        
+        return ''
