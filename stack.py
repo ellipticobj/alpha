@@ -16,6 +16,8 @@ class Stack:
         with open(self.filepath, 'w') as file:
             file.write(stack)
 
+        return data
+
     def pop(self):
         try:
             with open(self.filepath, 'r') as file:
@@ -52,3 +54,7 @@ class Stack:
             pass
 
         return [line.strip() for line in lines]
+    
+    def stack(self):
+        with open(self.filepath, 'r') as file:
+            return [i.strip() for i in file.readlines()]
