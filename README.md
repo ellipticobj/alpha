@@ -2,11 +2,12 @@
 stack based programming language
 
 # roadmap
-if else statements
-loops
-goto
-macros
-multiple stack support
+if else statements  
+loops  
+goto  
+macros  
+multiple stack support  
+variable support  
 
 # syntax
 ## push
