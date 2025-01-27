@@ -2,6 +2,7 @@ from stack import Stack
 import sys
 
 stack = Stack('stack.txt')
+labels = {}
 
 def parseline(line, stack: Stack):
     tokens = line.split()
@@ -127,12 +128,32 @@ def parseline(line, stack: Stack):
         stack.push(a > b)
         return ''
     
+    elif op == 'LABEL':
+        return ''
+    
+    elif op == 'JUMP':
+        # TODO: make jumps
+        return ''
+    
     else:
         return ''
+    
+def marklabels(lines):
+    # TODO: debug
+    global labels
+    labels = {}
+        
+    for idx in len(lines):
+        if lines[idx].startswith('LABEL'):
+            labels[lines[idx][1]] = idx
+            
+            
 
 def interp(file, stack):
     with open(file, 'r') as file:
         lines = [line.strip() for line in file.readlines()]
+        
+    marklabels(lines)
 
     idx = 0
 
