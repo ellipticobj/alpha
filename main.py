@@ -1,4 +1,5 @@
 from stack import Stack
+import sys
 
 stack = Stack('stack.txt')
 
@@ -104,4 +105,4 @@ def interp(file, stack):
             print(out)
         idx += 1
 
-interp('prog', stack)
+interp(sys.argv[1:], stack)
