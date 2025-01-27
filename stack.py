@@ -11,10 +11,10 @@ class Stack:
         except FileNotFoundError:
             stack = []
         
-        stack.append(data + '\n')
+        stack.append(f'{data}\n')
 
         with open(self.filepath, 'w') as file:
-            file.write(stack)
+            file.write(''.join(stack))
 
         return data
 
@@ -30,10 +30,9 @@ class Stack:
             raise IndexError('stack is empty')
         
         last = lines.pop().strip()
-        lines = lines[:-1].strip()
 
         with open(self.filepath, 'w') as file:
-            file.write(lines)
+            file.write(''.join(lines))
 
         return last
     
@@ -58,3 +57,29 @@ class Stack:
     def stack(self):
         with open(self.filepath, 'r') as file:
             return [i.strip() for i in file.readlines()]
+        
+    def dup(self):
+        with open(self.filepath, 'r') as file:
+            last = ''.join(file.readlines()[-1]).strip()
+
+        self.push(last)
+
+        return ''
+
+    def swap(self):
+        with open(self.filepath, 'r') as file:
+            lines = file.readlines()
+        
+        first = lines.pop()
+        second = lines.pop()
+
+        self.push(first)
+        self.push(second)
+
+        return ''
+    
+    def depth(self):
+        with open(self.filepath, 'r') as file:
+            lines = file.readlines()
+        
+        return len(lines)

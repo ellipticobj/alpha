@@ -15,13 +15,17 @@ def parseline(line, stack: Stack):
         if not args:
             raise ValueError("you need to push something")
         
-        return stack.push(int(args[0]))
+        stack.push(int(args[0]))
+
+        return
     
     elif op == 'POP':
         if not stack.stack():
             raise ValueError('stack cannot be empty')
         
-        return stack.pop(int())
+        stack.pop(int())
+
+        return
     
     elif op == 'ADD':
         if not stack.stack():
@@ -30,22 +34,26 @@ def parseline(line, stack: Stack):
         if len(stack.stack()) < 2:
             raise ValueError('stack needs 2 elements')
         
-        lhs = stack.pop()
-        rhs = stack.pop()
+        lhs = int(stack.pop())
+        rhs = int(stack.pop())
 
-        return stack.push(lhs + rhs)
+        stack.push(lhs + rhs)
+
+        return 
     
     elif op == 'SUB':
         if not stack.stack():
             raise ValueError('stack cannot be empty')
         
         if len(stack.stack()) < 2:
-            raise ValueError('stack needs 2 elements')
+            raise ValueError('stack needss 2 elements')
         
-        lhs = stack.pop()
-        rhs = stack.pop()
+        lhs = int(stack.pop())
+        rhs = int(stack.pop())
 
-        return stack.push(lhs-rhs)
+        stack.push(lhs-rhs)
+        
+        return
     
     elif op == "MUL":
         if not stack.stack():
@@ -54,10 +62,12 @@ def parseline(line, stack: Stack):
         if len(stack.stack()) < 2:
             raise ValueError('stack needs 2 elements')
         
-        lhs = stack.pop()
-        rhs = stack.pop()
+        lhs = int(stack.pop())
+        rhs = int(stack.pop())
 
-        return stack.push(lhs * rhs)
+        stack.push(lhs * rhs)
+
+        return
     
     elif op == "DIV":
         if not stack.stack():
@@ -65,6 +75,13 @@ def parseline(line, stack: Stack):
         
         if len(stack.stack()) < 2:
             raise ValueError('stack needs 2 elements')
+        
+        lhs = int(stack.pop())
+        rhs = int(stack.pop())
+
+        stack.push(lhs/rhs)
+
+        return
         
     elif op == "PRINT":
         return stack.print()
@@ -75,8 +92,16 @@ def parseline(line, stack: Stack):
     else:
         return
 
-def parse(lines):
-    for line in lines.splitlines():
-        parseline(line)
-    
-    print("END")
+def interp(file, stack):
+    with open(file, 'r') as file:
+        lines = [line.strip() for line in file.readlines()]
+
+    idx = 0
+
+    while idx < len(lines):
+        out = parseline(lines[idx], stack)
+        if out:
+            print(out)
+        idx += 1
+
+interp('prog', stack)
