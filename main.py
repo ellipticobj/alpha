@@ -16,9 +16,20 @@ def parseline(line, stack: Stack):
         if not args:
             raise ValueError("you need to push something")
         
-        stack.push(int(args[0]))
+        val = args[0]
+        
+        try:
+            stack.push(int(val))
+        except ValueError:
+            try:
+                stack.push(float(val))
+            except ValueError:
+                try:
+                    stack.push(bool(val))
+                except ValueError:
+                    stack.push(val)
 
-        return
+        return ''
     
     elif op == 'POP':
         if not stack.stack():
@@ -26,7 +37,7 @@ def parseline(line, stack: Stack):
         
         stack.pop(int())
 
-        return
+        return ''
     
     elif op == 'ADD':
         if not stack.stack():
@@ -40,7 +51,7 @@ def parseline(line, stack: Stack):
 
         stack.push(lhs + rhs)
 
-        return 
+        return ''
     
     elif op == 'SUB':
         if not stack.stack():
@@ -54,7 +65,7 @@ def parseline(line, stack: Stack):
 
         stack.push(lhs-rhs)
         
-        return
+        return ''
     
     elif op == "MUL":
         if not stack.stack():
@@ -68,7 +79,7 @@ def parseline(line, stack: Stack):
 
         stack.push(lhs * rhs)
 
-        return
+        return ''
     
     elif op == "DIV":
         if not stack.stack():
@@ -82,7 +93,7 @@ def parseline(line, stack: Stack):
 
         stack.push(lhs/rhs)
 
-        return
+        return ''
         
     elif op == "PRINT":
         return stack.print()
@@ -91,7 +102,7 @@ def parseline(line, stack: Stack):
         return stack.dump()
     
     else:
-        return
+        return ''
 
 def interp(file, stack):
     with open(file, 'r') as file:
