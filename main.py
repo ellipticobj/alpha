@@ -4,7 +4,8 @@ import sys
 stack = Stack('stack.txt')
 labels = {}
 
-def parseline(line, stack: Stack):
+def parseline(lines, idx, stack: Stack):
+    line = lines[idx].strip()
     tokens = line.split()
     if not tokens:
         return
@@ -146,8 +147,6 @@ def marklabels(lines):
     for idx in len(lines):
         if lines[idx].startswith('LABEL'):
             labels[lines[idx][1]] = idx
-            
-            
 
 def interp(file, stack):
     with open(file, 'r') as file:
@@ -158,7 +157,8 @@ def interp(file, stack):
     idx = 0
 
     while idx < len(lines):
-        out = parseline(lines[idx], stack)
+        out = parseline(lines, idx, stack)
+        
         if out:
             print(out)
         idx += 1
