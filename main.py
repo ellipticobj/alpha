@@ -62,6 +62,9 @@ def parseline(lines, idx, stack: Stack):
     elif op == "DROP":
         return stack.drop(), idx+1
     
+    elif op == "ROT":
+        return stack.rot(), idx+1
+    
     elif op == 'ADD':
         if not stack.stack():
             raise ValueError('stack cannot be empty')

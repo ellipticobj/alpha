@@ -6,8 +6,6 @@ i was watching a youtube video (i forgot the name sorry :(..), i got inspired by
 
 # roadmap
 if else statements  
-loops  
-jump  
 macros  
 multiple stack support  
 variable support  
@@ -77,10 +75,28 @@ STACK
 
 returns the entire stack, like DUMP but it doesnt purge the stack
 
+## drop
+```
+DROP
+```
+
+purges the stack, like DUMP but it doesnt return the stack
+
+## rot
+```
+ROT
+```
+
+rotates the top three elements of the stack:
+[1, 2, 3] ROT => [2, 3, 1]
+
 ## jump, label
 ```
 LABEL labelname
-JUMP label
+JUMP labelname
 ```
+
+`JUMP` makes the code skip everything between it and `LABEL`
+can be used to make infinite loops
 
 
