@@ -41,6 +41,27 @@ def parseline(lines, idx, stack: Stack):
 
         return '', idx+1
     
+    elif op == "PRINT":
+        return stack.print(args), idx+1
+    
+    elif op == "DUMP":
+        return stack.dump(), idx+1
+    
+    elif op == "STACK":
+        return stack.stack(), idx+1
+    
+    elif op == "DUP":
+        return stack.dup(), idx+1
+    
+    elif op == "SWAP":
+        return stack.swap(), idx+1
+    
+    elif op == "DEPTH":
+        return stack.depth(), idx+1
+    
+    elif op == "DROP":
+        return stack.drop(), idx+1
+    
     elif op == 'ADD':
         if not stack.stack():
             raise ValueError('stack cannot be empty')
@@ -98,12 +119,6 @@ def parseline(lines, idx, stack: Stack):
         stack.push(lhs/rhs)
 
         return '', idx+1
-        
-    elif op == "PRINT":
-        return stack.print(), idx+1
-    
-    elif op == "DUMP":
-        return stack.dump(), idx+1
     
     elif op == 'EQ':
         if len(stack.stack()) < 2:
@@ -150,9 +165,9 @@ def marklabels(lines):
     global labels
     labels = {}
         
-    for idx in len(lines):
+    for idx in range(len(lines)):
         if lines[idx].startswith('LABEL'):
-            labels[lines[idx][1]] = idx
+            labels[lines[idx].split()[1]] = idx
 
 def interp(file, stack):
     with open(file, 'r') as file:
@@ -163,9 +178,14 @@ def interp(file, stack):
     idx = 0
 
     while idx < len(lines):
-        out = parseline(lines, idx, stack)
+        out, idx = parseline(lines, idx, stack)
         
         if out:
             print(out)
 
-interp(sys.argv[1:], stack)
+
+args = sys.argv[1:]
+for file in args:
+    interp(file, stack)
+    
+print("===== END =====")

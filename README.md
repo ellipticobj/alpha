@@ -69,3 +69,18 @@ DEPTH
 ```
 
 returns the depth of the stack
+
+## stack
+```
+STACK
+```
+
+returns the entire stack, like DUMP but it doesnt purge the stack
+
+## jump, label
+```
+LABEL labelname
+JUMP label
+```
+
+

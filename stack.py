@@ -1,6 +1,6 @@
 class Stack:
     def __init__(self, filepath):
-        print(f"stack initialized\ncheck the stack at {filepath}")
+        print(f"==== START ====")
         self.filepath = filepath
 
     def push(self, data):
@@ -36,7 +36,9 @@ class Stack:
 
         return last
     
-    def print(self):
+    def print(self, data):
+        if data:
+            pass
         try:
             with open(self.filepath, 'r') as file:
                 lines = file.readlines()
