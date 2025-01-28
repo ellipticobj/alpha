@@ -31,7 +31,7 @@ def parseline(lines, idx, stack: Stack):
                 except:
                     stack.push(val)
 
-        return ''
+        return '', idx+1
     
     elif op == 'POP':
         if not stack.stack():
@@ -39,7 +39,7 @@ def parseline(lines, idx, stack: Stack):
         
         stack.pop(int())
 
-        return ''
+        return '', idx+1
     
     elif op == 'ADD':
         if not stack.stack():
@@ -55,7 +55,7 @@ def parseline(lines, idx, stack: Stack):
 
         stack.push(lhs + rhs)
 
-        return ''
+        return '', idx+1
     
     elif op == 'SUB':
         if not stack.stack():
@@ -69,7 +69,7 @@ def parseline(lines, idx, stack: Stack):
 
         stack.push(lhs-rhs)
         
-        return ''
+        return '', idx+1
     
     elif op == "MUL":
         if not stack.stack():
@@ -83,7 +83,7 @@ def parseline(lines, idx, stack: Stack):
 
         stack.push(lhs * rhs)
 
-        return ''
+        return '', idx+1
     
     elif op == "DIV":
         if not stack.stack():
@@ -97,13 +97,13 @@ def parseline(lines, idx, stack: Stack):
 
         stack.push(lhs/rhs)
 
-        return ''
+        return '', idx+1
         
     elif op == "PRINT":
-        return stack.print()
+        return stack.print(), idx+1
     
     elif op == "DUMP":
-        return stack.dump()
+        return stack.dump(), idx+1
     
     elif op == 'EQ':
         if len(stack.stack()) < 2:
@@ -111,7 +111,7 @@ def parseline(lines, idx, stack: Stack):
         a = stack.pop()
         b = stack.pop()
         stack.push(a == b)
-        return ''
+        return '', idx+1
 
     elif op == 'LT':
         if len(stack.stack()) < 2:
@@ -119,7 +119,7 @@ def parseline(lines, idx, stack: Stack):
         a = stack.pop()
         b = stack.pop()
         stack.push(a < b)
-        return ''
+        return '', idx+1
 
     elif op == 'GT':
         if len(stack.stack()) < 2:
@@ -127,17 +127,23 @@ def parseline(lines, idx, stack: Stack):
         a = stack.pop()
         b = stack.pop()
         stack.push(a > b)
-        return ''
+        return '', idx+1
     
     elif op == 'LABEL':
-        return ''
+        return '', idx+1
     
     elif op == 'JUMP':
-        # TODO: make jumps
-        return ''
+        if not tokens[1:]:
+            return SyntaxError('jump needs an argument')
+        labelname = tokens[1]
+        if labelname not in set(labels.keys()):
+            raise ValueError(f'label {labelname} not found')
+        
+        idx = labels[labelname]
+        return '', idx+1
     
     else:
-        return ''
+        return '', idx+1
     
 def marklabels(lines):
     # TODO: debug
@@ -161,6 +167,5 @@ def interp(file, stack):
         
         if out:
             print(out)
-        idx += 1
 
 interp(sys.argv[1:], stack)
