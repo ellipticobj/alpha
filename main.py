@@ -13,8 +13,43 @@ def parseline(lines, idx, stack: Stack):
     op = tokens[0].upper()
 
     args = tokens[1:]
+    
+    if op == "IF":
+        if not stack.stack():
+            raise ValueError('stack cannot be empty')
+        
+        cond = stack.pop()
+        
+        if cond.lower() == "true":
+            cond = True
+        elif cond.lower() == 'false':
+            cond = False
+        else:
+            raise ValueError('top item in stack has to be a boolean')
+        
+        if cond:
+            return '', idx + 1
+        
+        else:
+            while idx < len(lines):
+                idx += 1
+                next = lines[idx].strip().split()[0].upper()
+                if next == "ELSE" or next == "ENDIF":
+                    break
+            return '', idx + 1
 
-    if op == 'PUSH':
+    elif op == "ELSE":
+        while idx < len(lines):
+                idx += 1
+                next = lines[idx].strip().split()[0].upper()
+                if next == "ELSE" or next == "ENDIF":
+                    break
+        return '', idx + 1
+
+    elif op == "ENDIF":
+        return '', idx + 1
+    
+    elif op == 'PUSH':
         if not args:
             raise ValueError("you need to push something")
         
