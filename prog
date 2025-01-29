@@ -1,4 +1,6 @@
-PUSH false
+PUSH 1
+PUSH 1
+EQ
 IF
 PUSH 20
 STACK

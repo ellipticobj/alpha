@@ -99,3 +99,14 @@ JUMP labelname
 `JUMP` makes the code skip everything between it and `LABEL`
 can be used to make infinite loops
 
+## if else
+```
+IF
+PUSH true
+ELSE
+PUSH false
+ENDIF
+```
+
+if statement executes the code between it and else if the top element in the stack is true
+if statements need an endif

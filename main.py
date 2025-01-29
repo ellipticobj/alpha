@@ -4,6 +4,9 @@ import sys
 stack = Stack('stack.txt')
 labels = {}
 
+def evaluate(tokens, stack: Stack):
+    pass
+
 def parseline(lines, idx, stack: Stack):
     line = lines[idx].strip()
     tokens = line.split()
