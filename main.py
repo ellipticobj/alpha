@@ -3,10 +3,7 @@ import sys
 
 stack = Stack('stack.txt')
 labels = {}
-
-def evaluate(tokens, stack: Stack):
-    pass
-
+    
 def parseline(lines, idx, stack: Stack):
     line = lines[idx].strip()
     tokens = line.split()
@@ -112,8 +109,8 @@ def parseline(lines, idx, stack: Stack):
         
         # TODO: limit these to only ints and floats
         
-        lhs = stack.pop()
-        rhs = stack.pop()
+        lhs = float(stack.pop())
+        rhs = float(stack.pop())
 
         stack.push(lhs + rhs)
 
@@ -126,8 +123,8 @@ def parseline(lines, idx, stack: Stack):
         if len(stack.stack()) < 2:
             raise ValueError('stack needs 2 elements')
         
-        lhs = int(stack.pop())
-        rhs = int(stack.pop())
+        lhs = float(stack.pop())
+        rhs = float(stack.pop())
 
         stack.push(lhs-rhs)
         
@@ -140,8 +137,8 @@ def parseline(lines, idx, stack: Stack):
         if len(stack.stack()) < 2:
             raise ValueError('stack needs 2 elements')
         
-        lhs = int(stack.pop())
-        rhs = int(stack.pop())
+        lhs = float(stack.pop())
+        rhs = float(stack.pop())
 
         stack.push(lhs * rhs)
 
@@ -154,9 +151,13 @@ def parseline(lines, idx, stack: Stack):
         if len(stack.stack()) < 2:
             raise ValueError('stack needs 2 elements')
         
-        lhs = int(stack.pop())
-        rhs = int(stack.pop())
+        lhs = float(stack.pop())
+        rhs = float(stack.pop())
 
+        if rhs == 0:
+            stack.push(0)
+            return '', idx+1
+        
         stack.push(lhs/rhs)
 
         return '', idx+1
