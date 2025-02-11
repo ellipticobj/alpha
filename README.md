@@ -1,5 +1,5 @@
 # alpha
-stack based programming language
+a stack based programming language
 
 # why make this?
 i was watching a youtube video (i forgot the name sorry :(..), i got inspired by it to create this. additionally, since i had a school project coming up where i had to create a programming language, i thought itd be a great idea to get the feels of it by starting with this simpler project. 
