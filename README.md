@@ -1,4 +1,4 @@
-# alpha-lang
+# alpha
 stack based programming language
 
 # why make this?
